@@ -1,22 +1,121 @@
+---
+import "../styles/global.css";
+
+export interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = "Mariela Arias - Desarrolladora WordPress & Product Owner",
+	description = "Desarrolladora WordPress especializada en sitios web personalizados, e-commerce y soluciones digitales. También Product Owner certificada en metodologías ágiles y Scrum.",
+} = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- BFCache optimization -->
+		<meta name="format-detection" content="telephone=no" />
+
+		<!-- Preload critical fonts -->
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+		<!-- DNS Prefetch for social media domains -->
+		<link rel="dns-prefetch" href="//linkedin.com" />
+		<link rel="dns-prefetch" href="//github.com" />
+		<link rel="dns-prefetch" href="//x.com" />
+		<!-- Favicon optimized -->
+		<link rel="icon" type="image/webp" href="/favicon.webp" />
+		<link rel="apple-touch-icon" href="/favicon.webp" />
+
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
+		<meta name="description" content={description} />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+
+		<!-- Additional SEO -->
+		<meta name="robots" content="index, follow" />
+		<meta name="author" content="Mariela Arias" />
+		<meta
+			name="keywords"
+			content="WordPress, desarrolladora web, diseño web, e-commerce, WooCommerce, PHP, JavaScript, HTML, CSS, Product Owner, Scrum Master, República Dominicana"
+		/>
+
+		<!-- Critical CSS inline for faster rendering -->
+		<style>
+			/* Critical above-the-fold styles */
+			body {
+				font-family:
+					system-ui,
+					-apple-system,
+					sans-serif;
+				margin: 0;
+				background: white;
+				-webkit-font-smoothing: antialiased;
+				text-rendering: optimizeLegibility;
+			}
+
+			/* Hero section critical styles */
+			.hero-content {
+				min-height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			/* Header critical styles */
+			header {
+				position: fixed;
+				top: 0;
+				width: 100%;
+				z-index: 50;
+				background: rgba(255, 255, 255, 0.95);
+				backdrop-filter: blur(12px);
+			}
+
+			/* Prevent layout shift */
+			img {
+				max-width: 100%;
+				height: auto;
+			}
+		</style>
 	</head>
-	<body>
+	<body class="min-h-screen bg-white">
 		<slot />
 	</body>
 </html>
 
 <style>
-	html,
+	html {
+		scroll-behavior: smooth;
+		scroll-padding-top: 80px; /* Offset for fixed header */
+	}
+
 	body {
 		margin: 0;
 		width: 100%;
-		height: 100%;
+		min-height: 100vh;
+		font-family:
+			system-ui,
+			-apple-system,
+			BlinkMacSystemFont,
+			"Segoe UI",
+			Roboto,
+			sans-serif;
+		-webkit-font-smoothing: antialiased;
+		line-height: 1.5;
 	}
 </style>

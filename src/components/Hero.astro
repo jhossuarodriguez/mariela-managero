@@ -1,0 +1,57 @@
+---
+import { Image } from "astro:assets";
+import Profile from "../assets/mariela-profile.webp";
+---
+
+<section
+  id="inicio"
+  class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-32"
+>
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="mb-12 flex justify-center">
+      <Image
+        src={Profile}
+        alt="Mariela Arias - Desarrolladora WordPress & Product Owner"
+        class="h-36 w-36 rounded-full object-cover shadow-xl border-4 border-primary fade-in-up hover-scale"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+        width={144}
+        height={144}
+      />
+    </div>
+
+    <h1 class="text-primary mb-6 text-6xl md:text-4xl font-bold leading-tight">
+      Mariela Arias
+    </h1>
+    <h2
+      class="text-gray-800 mb-6 text-4xl md:text-2xl font-semibold leading-tight"
+    >
+      Desarrolladora WordPress & Product Owner
+    </h2>
+
+    <p class="text-text-muted max-w-2xl mx-auto mb-12 text-lg leading-relaxed">
+      Creo sitios web personalizados con WordPress, tiendas online con
+      WooCommerce y soluciones digitales que impulsan tu negocio. También soy
+      Product Owner certificada, combinando desarrollo técnico con gestión ágil
+      de proyectos.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+      <a
+        href="#proyectos"
+        class="hero-nav-link px-8 py-3 bg-primary text-white rounded-lg hover:bg-primary-hover focus-ring hover-scale text-center"
+        aria-label="Ver mis proyectos de WordPress y desarrollo web"
+      >
+        Ver Proyectos
+      </a>
+      <a
+        href="#contacto"
+        class="hero-nav-link px-8 py-3 border-2 border-primary text-primary rounded-lg hover:bg-primary hover:text-white focus-ring hover-scale text-center"
+        aria-label="Ir a la sección de contacto para enviar mensaje"
+      >
+        Contactar
+      </a>
+    </div>
+  </div>
+</section>

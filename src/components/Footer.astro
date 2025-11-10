@@ -1,0 +1,128 @@
+---
+const year = new Date().getFullYear();
+import Github from "../assets/icons/Github.svg";
+import LinkedIn from "../assets/icons/LinkedIn.svg";
+import X from "../assets/icons/X.svg";
+import Email from "../assets/icons/Email.svg";
+import { Image } from "astro:assets";
+import Logo from "../assets/logo.webp";
+---
+
+<footer class="bg-background-light py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-3 gap-8 mb-8">
+      <!-- Logo & Description -->
+      <div>
+        <div class="flex items-center space-x-3 mb-4">
+          <Image src={Logo} alt="Logo" class="h-12 w-12" />
+        </div>
+        <p class="text-gray-700">
+          Desarrolladora WordPress especializada en sitios web personalizados,
+          e-commerce y soluciones digitales innovadoras.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3
+          class="text-primary mb-4 text-2xl md:text-xl font-semibold leading-snug"
+        >
+          Enlaces Rápidos
+        </h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="#inicio"
+              class="footer-nav-link text-gray-700 hover:text-primary focus-ring transition-colors"
+              aria-label="Volver al inicio de la página"
+            >
+              Inicio
+            </a>
+          </li>
+          <li>
+            <a
+              href="#sobre-mi"
+              class="footer-nav-link text-gray-700 hover:text-primary focus-ring transition-colors"
+              aria-label="Ir a la sección sobre mí - información personal y profesional"
+            >
+              Sobre Mí
+            </a>
+          </li>
+          <li>
+            <a
+              href="#proyectos"
+              class="footer-nav-link text-gray-700 hover:text-primary focus-ring transition-colors"
+              aria-label="Ver mis proyectos de WordPress y desarrollo web"
+            >
+              Proyectos
+            </a>
+          </li>
+          <li>
+            <a
+              href="#contacto"
+              class="footer-nav-link text-gray-700 hover:text-primary focus-ring transition-colors"
+              aria-label="Ir al formulario de contacto para enviar mensaje"
+            >
+              Contacto
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Social Media -->
+      <div>
+        <h3
+          class="text-primary mb-4 text-2xl md:text-xl font-semibold leading-snug"
+        >
+          Sígueme
+        </h3>
+        <div class="flex gap-4">
+          <a
+            href="https://github.com/marielaarisamora"
+            class="p-3 bg-primary rounded-full hover:bg-primary-hover focus-ring hover-scale transition-colors"
+            title="Perfil de GitHub - Mariela Arias"
+            aria-label="Perfil de GitHub - Mariela Arias"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Github />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/marielaarisamora"
+            title="Perfil de LinkedIn - Mariela Arias"
+            aria-label="Perfil de LinkedIn - Mariela Arias"
+            target="_blank"
+            class="p-3 bg-primary rounded-full hover:bg-primary-hover focus-ring hover-scale transition-colors"
+            rel="noopener noreferrer"
+          >
+            <LinkedIn />
+          </a>
+          <a
+            href="https://x.com/marielaarisamora"
+            class="p-3 bg-primary rounded-full hover:bg-primary-hover focus-ring hover-scale transition-colors"
+            title="Perfil de X - Mariela Arias"
+            aria-label="Perfil de X - Mariela Arias"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <X />
+          </a>
+          <a
+            href="mailto:mariela.arias.m19@hotmail.es"
+            class="p-3 bg-primary rounded-full hover:bg-primary-hover focus-ring hover-scale transition-colors"
+            title="Enviar un correo a Mariela Arias"
+            aria-label="Enviar un correo a Mariela Arias"
+          >
+            <Email />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-primary pt-8 text-center">
+    <p class="text-gray-700">
+      © {year} Mariela Arias - Desarrolladora WordPress. Todos los derechos reservados.
+    </p>
+  </div>
+</footer>
