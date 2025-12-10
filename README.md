@@ -1,122 +1,162 @@
-# Portfolio Mariela Arias
+# Portfolio Mariela Arias 💼✨
 
-Portafolio personal de Mariela Arias - Desarrolladora WordPress & Product Owner. Un sitio web moderno y minimalista construido con Astro y TailwindCSS.
+Portfolio profesional de Mariela Arias - Desarrolladora WordPress & Product Owner. Un sitio web moderno, minimalista y totalmente responsive construido con Astro y TailwindCSS.
 
-## ✨ Características
+![Astro](https://img.shields.io/badge/Astro-5.x-FF5D01?style=flat&logo=astro&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.x-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat&logo=typescript&logoColor=white)
 
-- 🚀 Construido con [Astro](https://astro.build/) - Framework web ultrarrápido
-- 🎨 Estilizado con [TailwindCSS v4](https://tailwindcss.com/)
-- ✨ Animaciones fluidas con [@midudev/tailwind-animations](https://github.com/midudev/tailwind-animations)
-- 📱 Diseño totalmente responsive
-- ⚡ Optimizado para SEO y rendimiento
-- 🎯 Navegación suave entre secciones
+## 🌟 Acerca de
 
-## 🛠️ Tecnologías
+Portfolio diseñado para mostrar la experiencia y proyectos de Mariela Arias como Desarrolladora WordPress especializada y Product Owner. Destacando habilidades técnicas, proyectos realizados y experiencia profesional en desarrollo web y gestión de productos.
 
-- **Framework:** Astro 5.15.4
-- **Estilos:** TailwindCSS 4.1.17
-- **Gestor de paquetes:** pnpm
-- **Lenguaje:** TypeScript
+### Destacados
 
-## 📂 Estructura del Proyecto
+- **💻 Desarrollo WordPress**: Especialización en desarrollo de temas personalizados y plugins
+- **📊 Product Ownership**: Gestión de productos digitales y estrategia tecnológica
+- **🎨 Diseño Moderno**: Interfaz limpia y profesional con enfoque en UX/UI
+- **⚡ Rendimiento**: Optimización de velocidad y SEO para mejor visibilidad
+
+## 🚀 Tech Stack
+
+- **Framework**: [Astro 5.15.4](https://astro.build) - Framework web ultrarrápido
+- **Styling**: [Tailwind CSS 4.1.17](https://tailwindcss.com) con configuración personalizada
+- **Animations**: [@midudev/tailwind-animations](https://github.com/midudev/tailwind-animations)
+- **Language**: TypeScript
+- **Package Manager**: pnpm
+
+## ✨ Features
+
+- 🎨 **Diseño Moderno**: Interfaz limpia y profesional con paleta de colores personalizada
+- 📱 **Responsive Design**: Totalmente adaptable a cualquier dispositivo
+- ⚡ **Alto Rendimiento**: Carga rápida y optimización de assets
+- 🔍 **SEO Optimizado**: Meta tags y estructura semántica para mejor posicionamiento
+- 🎯 **Navegación Suave**: Transiciones fluidas entre secciones
+- ♿ **Accesibilidad**: Cumple con estándares WCAG para experiencia inclusiva
+- 🖼️ **Galería de Proyectos**: Showcase de trabajos y casos de éxito
+- 📧 **Formulario de Contacto**: Integración para comunicación directa
+
+## 🧞 Commands
+
+Todos los comandos se ejecutan desde la raíz del proyecto:
+
+| Command | Action |
+| :--- | :--- |
+| `pnpm install` | Instala las dependencias |
+| `pnpm dev` | Inicia el servidor de desarrollo en `localhost:4321` |
+| `pnpm build` | Construye el sitio para producción en `./dist/` |
+| `pnpm preview` | Vista previa del build de producción localmente |
+| `pnpm astro ...` | Ejecuta comandos CLI de Astro |
+
+## 📁 Project Structure
 
 ```
-/
-├── public/              # Archivos estáticos
+mariela-managero/
+├── public/
+│   └── favicon.svg
 ├── src/
-│   ├── assets/         # Imágenes y recursos
-│   │   ├── icons/      # Iconos del proyecto
-│   │   └── projects/   # Imágenes de proyectos
-│   ├── components/     # Componentes de Astro
-│   │   ├── About.astro
-│   │   ├── Contact.astro
-│   │   ├── Footer.astro
-│   │   ├── Header.astro
-│   │   ├── Hero.astro
-│   │   ├── Projects.astro
-│   │   └── Skills.astro
-│   ├── layouts/        # Layouts de página
-│   │   └── Layout.astro
-│   ├── pages/          # Páginas del sitio
-│   │   └── index.astro
-│   └── styles/         # Estilos globales
-│       └── global.css
+│   ├── assets/
+│   │   ├── icons/           # Iconos del proyecto
+│   │   ├── projects/        # Imágenes de proyectos
+│   │   └── mariela-profile.webp
+│   ├── components/
+│   │   ├── Header.astro     # Navegación principal
+│   │   ├── Hero.astro       # Sección de presentación
+│   │   ├── About.astro      # Información profesional
+│   │   ├── Projects.astro   # Portfolio de proyectos
+│   │   ├── Skills.astro     # Habilidades técnicas
+│   │   ├── Contact.astro    # Formulario de contacto
+│   │   └── Footer.astro     # Pie de página
+│   ├── layouts/
+│   │   └── Layout.astro     # Layout principal
+│   ├── pages/
+│   │   └── index.astro      # Página principal
+│   └── styles/
+│       └── global.css       # Estilos globales
 ├── astro.config.mjs
-├── package.json
-├── pnpm-lock.yaml
 ├── tsconfig.json
+├── package.json
 └── README.md
 ```
 
-## 🚀 Comenzar
+## 🛠️ Getting Started
 
-### Requisitos previos
+### Prerequisites
 
-- Node.js 18+ 
-- pnpm (recomendado) o npm
+- Node.js 18.x or higher
+- pnpm (recommended) or npm
 
-### Instalación
+### Installation
 
 ```bash
-# Clonar el repositorio
+# Clone the repository
 git clone https://github.com/jhossuarodriguez/mariela-managero.git
 
-# Entrar al directorio
+# Navigate to project directory
 cd mariela-managero
 
-# Instalar dependencias
+# Install dependencies
 pnpm install
-```
 
-### Comandos disponibles
-
-| Comando            | Acción                                          |
-| :----------------- | :---------------------------------------------- |
-| `pnpm install`     | Instala las dependencias                        |
-| `pnpm dev`         | Inicia el servidor de desarrollo en `localhost:4321` |
-| `pnpm build`       | Construye el sitio para producción en `./dist/` |
-| `pnpm preview`     | Vista previa local del sitio construido         |
-| `pnpm astro ...`   | Ejecuta comandos CLI de Astro                   |
-
-## 📦 Desarrollo
-
-```bash
-# Modo desarrollo
+# Start development server
 pnpm dev
-
-# Construir para producción
-pnpm build
-
-# Vista previa de producción
-pnpm preview
 ```
 
-## 🎨 Secciones del Portfolio
+El sitio estará disponible en `http://localhost:4321`
 
-- **Hero:** Presentación principal con imagen de perfil
-- **Sobre Mí:** Información profesional y experiencia
-- **Proyectos:** Portafolio de trabajos realizados
-- **Habilidades:** Stack tecnológico y competencias
-- **Contacto:** Formulario y enlaces de contacto
-- **Footer:** Información adicional y enlaces
+## 📝 Portfolio Sections
 
-## 📄 Licencia
+- **Hero**: Presentación principal con foto de perfil y título profesional
+- **About**: Experiencia profesional, educación y valores
+- **Projects**: Galería de proyectos destacados con tecnologías utilizadas
+- **Skills**: Stack técnico y competencias en desarrollo y gestión
+- **Contact**: Formulario de contacto y enlaces a redes sociales
+- **Footer**: Enlaces adicionales e información de copyright
 
-Este proyecto es de código abierto y está disponible bajo la Licencia MIT.
+## 🚢 Deployment
 
-## 👤 Autor
+Este proyecto está configurado para desplegarse fácilmente en plataformas como Vercel, Netlify o GitHub Pages.
+
+### Deploy to Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/jhossuarodriguez/mariela-managero)
+
+### Environment Variables
+
+No se requieren variables de entorno para el despliegue básico.
+
+## 🎨 Design System
+
+El portfolio utiliza una paleta de colores profesional y moderna con enfoque en legibilidad y experiencia de usuario.
+
+### Typography
+
+- **Font Family**: Sistema de fuentes nativas optimizada para rendimiento
+- **Weights**: 400 (Normal), 600 (Semi-bold), 700 (Bold)
+
+## 📞 Contact
 
 **Mariela Arias**
-- Desarrolladora WordPress & Product Owner
+- **Role**: Desarrolladora WordPress & Product Owner
+- **Portfolio**: [marielaarias.com](https://marielaarias.com)
+- **LinkedIn**: [linkedin.com/in/mariela-arias](https://linkedin.com/in/mariela-arias)
+- **GitHub**: [github.com/mariela-arias](https://github.com/mariela-arias)
 
-## 🤝 Contribuciones
+## 🤝 Contributing
 
-Las contribuciones, issues y solicitudes de funciones son bienvenidas.
+Este es un proyecto personal. Para consultas o colaboraciones, por favor contacta directamente.
 
-## 👀 Más información
+## 📄 License
 
-Para aprender más sobre Astro, consulta [la documentación oficial](https://docs.astro.build) o únete al [servidor de Discord](https://astro.build/chat).
+Este proyecto es personal y privado. Todos los derechos reservados.
+
+## 🙏 Acknowledgments
+
+- Construido con [Astro](https://astro.build)
+- Estilizado con [Tailwind CSS](https://tailwindcss.com)
+- Animaciones por [@midudev/tailwind-animations](https://github.com/midudev/tailwind-animations)
+- Íconos y diseño personalizado
 
 ---
 
-Desarrollado con ❤️ usando [Astro](https://astro.build/)
+**Hecho con ❤️ y código por Mariela Arias**
