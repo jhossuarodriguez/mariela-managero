@@ -1,46 +1,122 @@
-# Astro Starter Kit: Basics
+# Portfolio Mariela Arias
 
-```sh
-pnpm create astro@latest -- --template basics
+Portafolio personal de Mariela Arias - Desarrolladora WordPress & Product Owner. Un sitio web moderno y minimalista construido con Astro y TailwindCSS.
+
+## ✨ Características
+
+- 🚀 Construido con [Astro](https://astro.build/) - Framework web ultrarrápido
+- 🎨 Estilizado con [TailwindCSS v4](https://tailwindcss.com/)
+- ✨ Animaciones fluidas con [@midudev/tailwind-animations](https://github.com/midudev/tailwind-animations)
+- 📱 Diseño totalmente responsive
+- ⚡ Optimizado para SEO y rendimiento
+- 🎯 Navegación suave entre secciones
+
+## 🛠️ Tecnologías
+
+- **Framework:** Astro 5.15.4
+- **Estilos:** TailwindCSS 4.1.17
+- **Gestor de paquetes:** pnpm
+- **Lenguaje:** TypeScript
+
+## 📂 Estructura del Proyecto
+
 ```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
 /
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+├── public/              # Archivos estáticos
+├── src/
+│   ├── assets/         # Imágenes y recursos
+│   │   ├── icons/      # Iconos del proyecto
+│   │   └── projects/   # Imágenes de proyectos
+│   ├── components/     # Componentes de Astro
+│   │   ├── About.astro
+│   │   ├── Contact.astro
+│   │   ├── Footer.astro
+│   │   ├── Header.astro
+│   │   ├── Hero.astro
+│   │   ├── Projects.astro
+│   │   └── Skills.astro
+│   ├── layouts/        # Layouts de página
+│   │   └── Layout.astro
+│   ├── pages/          # Páginas del sitio
+│   │   └── index.astro
+│   └── styles/         # Estilos globales
+│       └── global.css
+├── astro.config.mjs
+├── package.json
+├── pnpm-lock.yaml
+├── tsconfig.json
+└── README.md
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## 🚀 Comenzar
 
-## 🧞 Commands
+### Requisitos previos
 
-All commands are run from the root of the project, from a terminal:
+- Node.js 18+ 
+- pnpm (recomendado) o npm
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+### Instalación
 
-## 👀 Want to learn more?
+```bash
+# Clonar el repositorio
+git clone https://github.com/jhossuarodriguez/mariela-managero.git
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+# Entrar al directorio
+cd mariela-managero
+
+# Instalar dependencias
+pnpm install
+```
+
+### Comandos disponibles
+
+| Comando            | Acción                                          |
+| :----------------- | :---------------------------------------------- |
+| `pnpm install`     | Instala las dependencias                        |
+| `pnpm dev`         | Inicia el servidor de desarrollo en `localhost:4321` |
+| `pnpm build`       | Construye el sitio para producción en `./dist/` |
+| `pnpm preview`     | Vista previa local del sitio construido         |
+| `pnpm astro ...`   | Ejecuta comandos CLI de Astro                   |
+
+## 📦 Desarrollo
+
+```bash
+# Modo desarrollo
+pnpm dev
+
+# Construir para producción
+pnpm build
+
+# Vista previa de producción
+pnpm preview
+```
+
+## 🎨 Secciones del Portfolio
+
+- **Hero:** Presentación principal con imagen de perfil
+- **Sobre Mí:** Información profesional y experiencia
+- **Proyectos:** Portafolio de trabajos realizados
+- **Habilidades:** Stack tecnológico y competencias
+- **Contacto:** Formulario y enlaces de contacto
+- **Footer:** Información adicional y enlaces
+
+## 📄 Licencia
+
+Este proyecto es de código abierto y está disponible bajo la Licencia MIT.
+
+## 👤 Autor
+
+**Mariela Arias**
+- Desarrolladora WordPress & Product Owner
+
+## 🤝 Contribuciones
+
+Las contribuciones, issues y solicitudes de funciones son bienvenidas.
+
+## 👀 Más información
+
+Para aprender más sobre Astro, consulta [la documentación oficial](https://docs.astro.build) o únete al [servidor de Discord](https://astro.build/chat).
+
+---
+
+Desarrollado con ❤️ usando [Astro](https://astro.build/)
