@@ -1,0 +1,227 @@
+---
+import Menu from "@/assets/icons/menu.svg";
+import X from "@/assets/icons/x.svg";
+import Button from "@/components/ui/Button.astro";
+import { type Locale, localePath, talkPath, ui } from "@/i18n/content";
+
+interface Props {
+	locale?: Locale;
+	alternatePath?: string;
+	selfPath?: string;
+}
+
+const {
+	locale = "es",
+	alternatePath = localePath(locale === "es" ? "en" : "es"),
+	selfPath = Astro.url.pathname,
+} = Astro.props;
+const copy = ui[locale].nav;
+const home = localePath(locale);
+const links = copy.links.map((link) => ({
+	...link,
+	href: `${home}#${link.hash}`,
+}));
+const esHref = locale === "es" ? selfPath : alternatePath;
+const enHref = locale === "en" ? selfPath : alternatePath;
+
+const languages = [
+	{ code: "es" as Locale, short: "ES", name: "Español", href: esHref },
+	{ code: "en" as Locale, short: "EN", name: "English", href: enHref },
+];
+const languageLinkClass =
+	"flex min-h-6 items-center rounded-full px-3 py-1 font-heading text-sm font-semibold transition-colors aria-[current=page]:bg-charcoal aria-[current=page]:text-white";
+---
+
+<div class="h-[66px] sm:h-[82px] lg:h-[82px] 2xl:h-[98px]" aria-hidden="true"></div>
+<header id="main-header" class="fixed inset-x-0 top-0 z-40 bg-warm-white/80 backdrop-blur">
+	<div class="mx-auto grid w-full grid-cols-[1fr_auto_1fr] items-center px-2 py-2 sm:px-6 sm:py-3 lg:px-16 lg:py-3 2xl:px-20 2xl:py-4">
+		<a href={home} class="justify-self-start" aria-label={copy.backHome}>
+			<img src="/images/logo-500.png" alt="Managero" width="500" height="137" loading="eager" class="h-auto w-[105px] sm:w-[160px] lg:w-[200px] 2xl:w-[250px]" />
+		</a>
+
+		<nav class="hidden items-center gap-6 lg:flex 2xl:gap-8" aria-label={copy.mainLabel}>
+			{links.map((link) => (
+				<a href={link.href} class="font-heading text-base font-medium text-muted transition-colors hover:text-charcoal 2xl:text-xl">
+					{link.label}
+				</a>
+			))}
+		</nav>
+
+		<div class="hidden items-center gap-3 justify-self-end lg:flex">
+			<nav class="flex items-center gap-0.5 rounded-full border border-border p-0.5" aria-label={copy.language}>
+				{languages.map((language) => (
+					<a
+						href={language.href}
+						hreflang={language.code}
+						lang={language.code}
+						aria-current={locale === language.code ? "page" : undefined}
+						class={`${languageLinkClass} text-muted hover:text-brand-ink`}
+					>
+						<span aria-hidden="true">{language.short}</span>
+						<span class="sr-only">{language.name}</span>
+					</a>
+				))}
+			</nav>
+			<Button class="bg-brand-primary px-5 py-2.5 text-base text-charcoal hover:bg-brand-peach 2xl:px-6 2xl:py-3 2xl:text-lg" href={talkPath(locale)}>{copy.talk}</Button>
+		</div>
+
+		<button
+			type="button"
+			class="relative col-start-3 flex h-11 w-11 items-center justify-center justify-self-end rounded-full border border-border lg:hidden"
+			aria-label={copy.open}
+			aria-expanded="false"
+			data-mobile-menu-toggle
+		>
+			<Menu id="mobile-menu-icon" width="18" height="18" class="absolute transition-all duration-300" />
+			<X id="mobile-close-icon" width="18" height="18" class="absolute scale-0 opacity-0 transition-all duration-300" />
+		</button>
+	</div>
+</header>
+
+<div id="mobile-menu" class="invisible fixed inset-0 z-50 flex min-h-dvh -translate-y-full flex-col overflow-y-auto bg-warm-white p-6 opacity-0 transition-all duration-500 ease-in-out max-[360px]:p-4 lg:hidden" data-mobile-menu>
+	<div class="flex items-center justify-between">
+		<a href={home} aria-label={copy.backHome}>
+			<img src="/images/logo-500.png" alt="Managero" width="500" height="137" loading="lazy" class="h-8 w-auto" />
+		</a>
+		<button
+			type="button"
+			class="flex h-11 w-11 items-center justify-center rounded-full border border-border"
+			aria-label={copy.close}
+			data-mobile-menu-close
+		>
+			<X width="18" height="18" />
+		</button>
+	</div>
+
+	<nav class="mt-12 flex flex-col gap-6" aria-label={copy.mobileLabel}>
+		{links.map((link) => (
+			<a href={link.href} class="mobile-nav-link text-2xl font-semibold text-charcoal" data-mobile-menu-link>
+				{link.label}
+			</a>
+		))}
+	</nav>
+
+	<nav class="mt-auto mb-4 flex items-center justify-center gap-1 self-center rounded-full border border-border p-1" aria-label={copy.language}>
+		{languages.map((language) => (
+			<a
+				href={language.href}
+				hreflang={language.code}
+				lang={language.code}
+				aria-current={locale === language.code ? "page" : undefined}
+				class={`${languageLinkClass} min-h-11 px-5 text-base text-muted`}
+			>
+				<span aria-hidden="true">{language.short}</span>
+				<span class="sr-only">{language.name}</span>
+			</a>
+		))}
+	</nav>
+	<Button href={talkPath(locale)} class="w-full">{copy.talk}</Button>
+</div>
+
+<style>
+	.mobile-nav-link {
+		opacity: 0;
+		transform: translateY(20px);
+		transition:
+			opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	.mobile-nav-link--visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+		#main-header {
+		transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+		will-change: transform;
+	}
+
+	#main-header.is-hidden {
+		transform: translateY(-100%);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		#main-header {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	const toggle = document.querySelector<HTMLButtonElement>("[data-mobile-menu-toggle]");
+	const close = document.querySelector("[data-mobile-menu-close]");
+	const menu = document.querySelector<HTMLElement>("[data-mobile-menu]");
+	const links = document.querySelectorAll<HTMLElement>("[data-mobile-menu-link]");
+	const menuIcon = document.querySelector("#mobile-menu-icon");
+	const closeIcon = document.querySelector("#mobile-close-icon");
+
+	let isOpen = false;
+
+	const open = () => {
+		isOpen = true;
+		menu?.classList.remove("-translate-y-full", "opacity-0", "invisible");
+		menu?.classList.add("translate-y-0", "opacity-100", "visible");
+
+		menuIcon?.classList.add("scale-0", "opacity-0");
+		closeIcon?.classList.remove("scale-0", "opacity-0");
+
+		toggle?.setAttribute("aria-expanded", "true");
+		document.body.style.overflow = "hidden";
+
+		links.forEach((link, index) => {
+			setTimeout(() => link.classList.add("mobile-nav-link--visible"), 200 + index * 80);
+		});
+	};
+
+	const hide = () => {
+		isOpen = false;
+		menu?.classList.add("-translate-y-full", "opacity-0", "invisible");
+		menu?.classList.remove("translate-y-0", "opacity-100", "visible");
+
+		menuIcon?.classList.remove("scale-0", "opacity-0");
+		closeIcon?.classList.add("scale-0", "opacity-0");
+
+		toggle?.setAttribute("aria-expanded", "false");
+		document.body.style.overflow = "";
+
+		links.forEach((link) => link.classList.remove("mobile-nav-link--visible"));
+	};
+
+	toggle?.addEventListener("click", () => (isOpen ? hide() : open()));
+	close?.addEventListener("click", hide);
+	links.forEach((link) => link.addEventListener("click", () => setTimeout(hide, 150)));
+	document.addEventListener("keydown", (event) => event.key === "Escape" && isOpen && hide());
+</script>
+
+<script>
+
+	const header = document.querySelector<HTMLElement>("#main-header");
+
+	if (header) {
+		let lastScrollY = window.scrollY;
+		let isHidden = false;
+		let ticking = false;
+
+		const update = () => {
+			ticking = false;
+			const currentScrollY = window.scrollY;
+			const shouldHide = currentScrollY > lastScrollY && currentScrollY > 80;
+			lastScrollY = currentScrollY;
+
+			if (shouldHide === isHidden) return;
+			isHidden = shouldHide;
+			header.classList.toggle("is-hidden", shouldHide);
+		};
+
+		window.addEventListener(
+			"scroll",
+			() => {
+				if (ticking) return;
+				ticking = true;
+				requestAnimationFrame(update);
+			},
+			{ passive: true },
+		);
+	}
+</script>

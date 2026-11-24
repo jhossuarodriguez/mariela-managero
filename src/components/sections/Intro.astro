@@ -1,0 +1,45 @@
+---
+import ArrowRight from "@/assets/icons/arrow-right.svg";
+import { type Locale, ui } from "@/i18n/content";
+
+interface Props {
+	locale?: Locale;
+}
+const { locale = "es" } = Astro.props;
+const copy = ui[locale].intro;
+const PORTFOLIO_URL = "https://mariela-managero.vercel.app/";
+---
+
+<section
+	id={locale === "es" ? "sobre-mi" : "about"}
+	class="bg-cream-100 px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24 2xl:px-14"
+	aria-labelledby="intro-title"
+>
+	<div class="mx-auto grid w-full max-w-340 gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+		<div>
+			<p class="inline-flex rounded-full bg-brand-sand px-3.5 py-1.5 text-sm font-semibold text-charcoal">{copy.eyebrow}</p>
+			<h2 id="intro-title" class="mt-5 font-heading text-4xl leading-[1.05] font-bold tracking-[-0.02em] text-charcoal sm:text-5xl">
+				{copy.title}
+			</h2>
+			<p class="mt-5 max-w-xl text-lg leading-relaxed text-muted">{copy.description}</p>
+			<a
+				href={PORTFOLIO_URL}
+				target="_blank"
+				rel="noopener"
+				class="mt-8 inline-flex items-center gap-3 rounded-full bg-brand-primary px-6 py-3 font-semibold text-charcoal transition hover:-translate-y-0.5 hover:bg-brand-peach"
+			>
+				{copy.cta}
+				<ArrowRight class="size-4" aria-hidden="true" />
+			</a>
+		</div>
+
+		<dl class="grid grid-cols-2 gap-px self-center overflow-hidden rounded-2xl border border-border bg-border">
+			{copy.facts.map((fact) => (
+				<div class="flex flex-col gap-1 bg-warm-white p-6 sm:p-8">
+					<dt class="order-2 text-sm text-muted sm:text-base">{fact.label}</dt>
+					<dd class="order-1 font-heading text-xl font-bold text-charcoal sm:text-2xl">{fact.value}</dd>
+				</div>
+			))}
+		</dl>
+	</div>
+</section>

@@ -1,0 +1,307 @@
+---
+import { actions } from "astro:actions";
+import ChevronRight from "@/assets/icons/chevron-right.svg";
+import { PAYMENT_PLAN_IDS, paymentPlans } from "@/data/pricing";
+import { type Locale, ui } from "@/i18n/content";
+
+interface Props {
+	locale?: Locale;
+	detailed?: boolean;
+	selectedService?: string;
+}
+
+const { locale = "es", detailed = false, selectedService = "" } = Astro.props;
+const copy = ui[locale].form;
+const turnstileSiteKey = import.meta.env.TURNSTILE_SITE_KEY;
+const inputClass =
+	"w-full rounded-md border border-[#eee9e2] bg-white px-3 py-2.5 text-base text-[#332f2b] outline-none transition-colors placeholder:text-[#aaa39c] focus:border-brand-orange sm:text-sm lg:px-2.5 lg:py-2 lg:text-xs 2xl:px-3 2xl:py-2.5 2xl:text-sm";
+---
+
+<form
+	id="contact-form"
+	class="grid gap-2.75 lg:gap-2.25 2xl:gap-2.75"
+	method="POST"
+	action={actions.send}
+	data-error={copy.error}
+	data-verification={copy.verification}
+>
+	<input type="hidden" name="locale" value={locale} />
+	{detailed && <input type="hidden" name="market" value="do" />}
+	<div class="grid grid-cols-2 gap-3.5 lg:gap-3 2xl:gap-3.5 max-[520px]:grid-cols-1">
+		<div class="flex flex-col gap-1">
+			<label for="name" class="text-sm font-semibold text-[#5e5852] lg:text-xs 2xl:text-sm">{copy.name}</label>
+			<input
+				id="name"
+				name="name"
+				type="text"
+				required
+				class={inputClass}
+				placeholder={copy.name}
+			/>
+		</div>
+		<div class="flex flex-col gap-1">
+			<label for="email" class="text-sm font-semibold text-[#5e5852] lg:text-xs 2xl:text-sm">{copy.email}</label>
+			<input
+				id="email"
+				name="email"
+				type="email"
+				required
+				class={inputClass}
+				placeholder={copy.emailPlaceholder}
+			/>
+		</div>
+	</div>
+	{detailed && (
+		<div class="grid grid-cols-2 gap-3.5 lg:gap-3 2xl:gap-3.5 max-[520px]:grid-cols-1">
+			<div class="flex flex-col gap-1">
+				<label for="company" class="text-sm font-semibold text-[#5e5852] lg:text-xs 2xl:text-sm">{copy.company}</label>
+				<input id="company" name="company" type="text" class={inputClass} placeholder={copy.company} />
+			</div>
+			<div class="flex flex-col gap-1">
+				<label for="phone" class="text-sm font-semibold text-[#5e5852] lg:text-xs 2xl:text-sm">{copy.phone}</label>
+				<input id="phone" name="phone" type="tel" class={inputClass} placeholder={copy.phone} />
+			</div>
+		</div>
+	)}
+	<div class="flex flex-col gap-1">
+		<label for="service" class="text-sm font-semibold text-[#5e5852] lg:text-xs 2xl:text-sm">{copy.service}</label>
+		<select id="service" name="service" required class={inputClass}>
+			<option value="" selected={!selectedService} disabled>{copy.selectService}</option>
+			{Object.entries(copy.services).map(([value, label]) => <option value={value} selected={selectedService === value}>{label}</option>)}
+		</select>
+	</div>
+	{detailed && (
+		<>
+			<div class="grid grid-cols-2 gap-3.5 lg:gap-3 2xl:gap-3.5 max-[520px]:grid-cols-1">
+				<div class="flex flex-col gap-1">
+					<label for="budget" class="text-sm font-semibold text-[#5e5852] lg:text-xs 2xl:text-sm">{copy.budget}</label>
+					<select
+						id="budget"
+						name="budget"
+						disabled
+						class:list={[inputClass, "disabled:cursor-not-allowed disabled:bg-[#f7f4f0] disabled:text-muted"]}
+						data-placeholder={copy.selectBudget}
+						data-empty={copy.selectServiceFirst}
+					>
+						<option value="" selected>{copy.selectServiceFirst}</option>
+					</select>
+				</div>
+				<div class="flex flex-col gap-1">
+					<label for="payment" class="text-sm font-semibold text-[#5e5852] lg:text-xs 2xl:text-sm">{copy.payment}</label>
+					<select id="payment" name="payment" class={inputClass}>
+						{PAYMENT_PLAN_IDS.map((plan) => <option value={plan}>{paymentPlans[plan].label[locale]}</option>)}
+					</select>
+				</div>
+			</div>
+			<div id="price-breakdown" class="grid gap-2 rounded-md bg-cream-100 px-3 py-2.5" aria-live="polite" hidden>
+				<dl class="flex flex-wrap gap-x-8 gap-y-2"></dl>
+				<p class="text-xs text-muted">{copy.estimateNote}</p>
+				<template>
+					<div>
+						<dt class="text-xs text-muted"></dt>
+						<dd class="font-heading text-base font-semibold text-charcoal lg:text-sm 2xl:text-base"></dd>
+					</div>
+				</template>
+			</div>
+			<div class="flex flex-col gap-1">
+				<label for="timeline" class="text-sm font-semibold text-[#5e5852] lg:text-xs 2xl:text-sm">{copy.timeline}</label>
+				<input id="timeline" name="timeline" type="text" class={inputClass} placeholder={copy.timeline} />
+			</div>
+		</>
+	)}
+	<div class="flex flex-col gap-1">
+		<label for="message" class="text-sm font-semibold text-[#5e5852] lg:text-xs 2xl:text-sm">{copy.message}</label>
+		<textarea
+			id="message"
+			name="message"
+			rows={detailed ? 5 : 2}
+			required
+			class="min-h-14 w-full resize-y rounded-md border border-[#eee9e2] bg-white px-3 py-2.5 text-base text-[#332f2b] outline-none transition-colors placeholder:text-[#aaa39c] focus:border-brand-orange sm:text-sm lg:min-h-11 lg:px-2.5 lg:py-2 lg:text-xs 2xl:min-h-14 2xl:px-3 2xl:py-2.5 2xl:text-sm"
+			placeholder={copy.messagePlaceholder}
+		></textarea>
+	</div>
+	<div class="absolute left-[-9999px]" aria-hidden="true">
+		<label for="website">Website</label>
+		<input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+	</div>
+	{turnstileSiteKey && (
+		<div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-action="contact" data-theme="light"></div>
+	)}
+	<p
+		id="contact-form-status"
+		class="text-sm font-medium lg:text-xs 2xl:text-sm"
+		role="status"
+		aria-live="polite"
+		hidden
+	>
+	</p>
+	<button
+		type="submit"
+		class="mt-px inline-flex w-fit cursor-pointer items-center justify-center gap-1.75 rounded-full border-0 bg-brand-primary px-5 py-2.5 text-sm font-bold text-charcoal uppercase hover:bg-brand-peach disabled:cursor-not-allowed disabled:opacity-60 lg:gap-1.5 lg:px-4 lg:py-2 lg:text-xs 2xl:gap-1.75 2xl:px-5 2xl:py-2.5 2xl:text-sm"
+	>
+		{copy.submit}
+		<ChevronRight class="size-3.25 lg:size-2.75 2xl:size-3.25" aria-hidden="true" />
+	</button>
+</form>
+
+{turnstileSiteKey && (
+	<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+)}
+
+<script>
+	import { actions } from "astro:actions";
+	import { isUSTimeZone } from "@/data/locations";
+	import {
+		budgetLabel,
+		formatPrice,
+		isContactService,
+		type MarketId,
+		PAYMENT_PLAN_IDS,
+		paymentPlans,
+		resolvePaymentPlan,
+		servicePricing,
+	} from "@/data/pricing";
+	import type { Locale } from "@/i18n/content";
+
+	declare global {
+		interface Window {
+			turnstile?: { reset: (widget?: string | HTMLElement) => void };
+		}
+	}
+
+	const form = document.querySelector<HTMLFormElement>("#contact-form");
+	const status = document.querySelector<HTMLParagraphElement>("#contact-form-status");
+	const submitButton = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+	const turnstileWidget = form?.querySelector<HTMLElement>(".cf-turnstile");
+	const serviceSelect = form?.querySelector<HTMLSelectElement>("#service");
+	const requestedService = new URLSearchParams(window.location.search).get("service");
+	if (
+		serviceSelect &&
+		requestedService &&
+		Array.from(serviceSelect.options).some((option) => option.value === requestedService)
+	) {
+		serviceSelect.value = requestedService;
+	}
+
+	const setupPricing = (form: HTMLFormElement, serviceSelect: HTMLSelectElement) => {
+		const marketInput = form.querySelector<HTMLInputElement>('input[name="market"]');
+		const budgetSelect = form.querySelector<HTMLSelectElement>("#budget");
+		const paymentSelect = form.querySelector<HTMLSelectElement>("#payment");
+		const breakdown = form.querySelector<HTMLElement>("#price-breakdown");
+		const installments = breakdown?.querySelector("dl");
+		const note = breakdown?.querySelector("p");
+		const template = breakdown?.querySelector("template");
+		if (
+			!marketInput ||
+			!budgetSelect ||
+			!paymentSelect ||
+			!breakdown ||
+			!installments ||
+			!note ||
+			!template
+		)
+			return;
+
+		const locale: Locale =
+			form.querySelector<HTMLInputElement>('input[name="locale"]')?.value === "en" ? "en" : "es";
+		// Same rule as the contact details in Layout: visitors in a US time zone get US pricing.
+		const market: MarketId = isUSTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone)
+			? "us"
+			: "do";
+		marketInput.value = market;
+		const estimateNote = note.textContent ?? "";
+
+		const currentPricing = () =>
+			isContactService(serviceSelect.value) ? servicePricing[serviceSelect.value] : undefined;
+
+		const renderOptions = () => {
+			const pricing = currentPricing();
+			const tiers = pricing
+				? pricing.tiers.map((tier) => new Option(budgetLabel(pricing, tier, market, locale), tier.id))
+				: [];
+			const placeholder = pricing ? budgetSelect.dataset.placeholder : budgetSelect.dataset.empty;
+			budgetSelect.replaceChildren(new Option(placeholder ?? "", ""), ...tiers);
+			budgetSelect.disabled = !pricing;
+
+			const plans = pricing?.payments ?? PAYMENT_PLAN_IDS;
+			const plan = resolvePaymentPlan(plans, paymentSelect.value);
+			paymentSelect.replaceChildren(...plans.map((id) => new Option(paymentPlans[id].label[locale], id)));
+			paymentSelect.value = plan;
+		};
+
+		const renderBreakdown = () => {
+			const pricing = currentPricing();
+			const tier = pricing?.tiers.find(({ id }) => id === budgetSelect.value);
+			breakdown.hidden = !tier;
+			if (!pricing || !tier) return;
+
+			const plan = paymentPlans[resolvePaymentPlan(pricing.payments, paymentSelect.value)];
+			installments.replaceChildren(
+				...plan.installments.map(({ share, label }) => {
+					const item = template.content.cloneNode(true) as DocumentFragment;
+					const [term, amount] = item.querySelectorAll("dt, dd");
+					term.textContent = `${label[locale]} · ${share * 100}%`;
+					amount.textContent = formatPrice(tier.price[market], market, locale, {
+						monthly: pricing.monthly,
+						share,
+					});
+					return item;
+				}),
+			);
+			note.textContent = pricing.note ? `${estimateNote} ${pricing.note[locale]}` : estimateNote;
+		};
+
+		const sync = () => {
+			renderOptions();
+			renderBreakdown();
+		};
+
+		serviceSelect.addEventListener("change", sync);
+		budgetSelect.addEventListener("change", renderBreakdown);
+		paymentSelect.addEventListener("change", renderBreakdown);
+		sync();
+
+		return sync;
+	};
+
+	const syncPricing = form && serviceSelect ? setupPricing(form, serviceSelect) : undefined;
+
+	form?.addEventListener("submit", async (event) => {
+		event.preventDefault();
+		if (!status || !submitButton) return;
+
+		const formData = new FormData(form);
+		// Time on the page: the server drops submissions faster than a person could type them.
+		formData.set("elapsed", String(Math.round(performance.now())));
+
+		if (turnstileWidget && !formData.get("cf-turnstile-response")) {
+			status.hidden = false;
+			status.textContent = form.dataset.verification || form.dataset.error || "";
+			status.classList.remove("text-green-600");
+			status.classList.add("text-red-600");
+			return;
+		}
+
+		submitButton.disabled = true;
+		status.hidden = true;
+
+		const { data, error } = await actions.send(formData);
+
+		submitButton.disabled = false;
+		status.hidden = false;
+		window.turnstile?.reset(turnstileWidget ?? undefined);
+
+		if (error) {
+			status.textContent = error.message || form.dataset.error || "Something went wrong.";
+			status.classList.remove("text-green-600");
+			status.classList.add("text-red-600");
+			return;
+		}
+
+		status.textContent = data.message;
+		status.classList.remove("text-red-600");
+		status.classList.add("text-green-600");
+		form.reset();
+		syncPricing?.();
+	});
+</script>
