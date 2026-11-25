@@ -31,19 +31,17 @@ export const ui = {
 			language: "Seleccionar idioma",
 		},
 		hero: {
-			eyebrow: "Desarrollo web y consultoría TI",
-			title: "Webs, tiendas y apps que tu negocio sí puede usar",
+			title: "Agencia de branding, diseño web y apps",
 			description:
-				"Soy Mariela Arias. Construyo sitios en WordPress, tiendas en Shopify y sistemas a medida, y me encargo de que el proyecto llegue a buen puerto.",
-			cta: "Cuéntame tu proyecto",
-			secondaryCta: "Ver servicios",
-			alt: "Mariela Arias, fundadora de Managero RD",
-			badgeName: "Mariela Arias",
-			badgeRole: "Product Owner y consultora TI",
-			pillars: ["Análisis", "Desarrollo", "Diseño", "Gestión"],
+				"Convertimos ideas en experiencias digitales con diseño, estrategia y tecnología.",
+			cta: "Iniciar proyecto",
+			alt: "Collage de proyectos y aplicaciones de marca creadas por Managero",
 		},
 		intro: {
 			eyebrow: "Sobre mí",
+			photoAlt: "Mariela Arias, fundadora de Managero RD",
+			badgeName: "Mariela Arias",
+			badgeRole: "Product Owner y consultora TI",
 			title: "Hola, soy Mariela Arias",
 			description:
 				"Soy ingeniera en sistemas, desarrolladora WordPress y Product Owner certificada. Managero RD es mi estudio: trabajo contigo directamente y sumo colaboradores de confianza cuando el proyecto lo pide.",
@@ -206,19 +204,17 @@ export const ui = {
 			language: "Select language",
 		},
 		hero: {
-			eyebrow: "Web development and IT consulting",
-			title: "Websites, stores and apps your business can actually use",
+			title: "Branding, web design and apps agency",
 			description:
-				"I'm Mariela Arias. I build WordPress sites, Shopify stores and custom systems, and I make sure the project gets delivered.",
-			cta: "Tell me about your project",
-			secondaryCta: "See services",
-			alt: "Mariela Arias, founder of Managero RD",
-			badgeName: "Mariela Arias",
-			badgeRole: "Product Owner and IT consultant",
-			pillars: ["Analysis", "Development", "Design", "Management"],
+				"We turn ideas into digital experiences through design, strategy and technology.",
+			cta: "Start a project",
+			alt: "Collage of brand projects and applications created by Managero",
 		},
 		intro: {
 			eyebrow: "About me",
+			photoAlt: "Mariela Arias, founder of Managero RD",
+			badgeName: "Mariela Arias",
+			badgeRole: "Product Owner and IT consultant",
 			title: "Hi, I'm Mariela Arias",
 			description:
 				"I'm a systems engineer, WordPress developer and certified Product Owner. Managero RD is my studio: you work with me directly, and I bring in trusted collaborators when the project needs it.",

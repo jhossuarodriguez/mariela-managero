@@ -1,11 +1,6 @@
 ---
 import ArrowRight from "@/assets/icons/arrow-right.svg";
-import Code from "@/assets/icons/code.svg";
-import PenTool from "@/assets/icons/pen-tool.svg";
-import Search from "@/assets/icons/search.svg";
-import Target from "@/assets/icons/target.svg";
 import { heroImage } from "@/data/heroImage";
-import { servicesIndexPath } from "@/data/services";
 import { type Locale, talkPath, ui } from "@/i18n/content";
 
 interface Props {
@@ -13,65 +8,46 @@ interface Props {
 }
 const { locale = "es" } = Astro.props;
 const copy = ui[locale].hero;
-const pillarIcons = [Search, Code, PenTool, Target];
 ---
 
-<section class="overflow-hidden bg-warm-white px-4 pt-6 pb-16 sm:px-6 sm:pt-10 lg:px-8 lg:pb-24 2xl:px-14">
-	<div class="mx-auto grid w-full max-w-340 items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-		<div class="order-2 lg:order-1">
-			<p class="text-xs font-bold tracking-[0.18em] text-brand-ink uppercase sm:text-sm">{copy.eyebrow}</p>
-			<h1 class="mt-4 font-heading text-[clamp(2.4rem,7vw,4.5rem)] leading-[1.02] font-bold tracking-[-0.02em] text-charcoal">
-				{copy.title}
-			</h1>
-			<p class="mt-6 max-w-xl text-lg leading-relaxed text-muted sm:text-xl">{copy.description}</p>
-
-			<div class="mt-8 flex flex-col gap-3 sm:flex-row">
-				<a
-					href={talkPath(locale)}
-					class="inline-flex w-fit items-center gap-3 rounded-full bg-brand-primary px-6 py-3.5 font-semibold text-charcoal transition hover:-translate-y-0.5 hover:bg-brand-peach focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-orange"
-				>
-					{copy.cta}
-					<ArrowRight class="size-4" aria-hidden="true" />
-				</a>
-				<a
-					href={servicesIndexPath(locale)}
-					class="inline-flex w-fit items-center rounded-full border border-charcoal/25 px-6 py-3.5 font-semibold text-charcoal transition hover:border-charcoal hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-orange"
-				>
-					{copy.secondaryCta}
-				</a>
-			</div>
-
-			<ul class="mt-10 grid max-w-lg grid-cols-4 gap-2 border-t border-border pt-6">
-				{copy.pillars.map((pillar, index) => {
-					const Icon = pillarIcons[index];
-					return (
-						<li class="flex flex-col items-start gap-2 text-sm font-semibold text-charcoal">
-							<Icon class="size-5 text-brand-orange" aria-hidden="true" />
-							{pillar}
-						</li>
-					);
-				})}
-			</ul>
+<section class="overflow-hidden bg-warm-white px-2 sm:px-6 lg:px-8 2xl:px-14">
+	<div
+		class="relative mx-auto h-90 max-w-425 overflow-hidden rounded-2xl bg-cream-100 sm:h-130 sm:rounded-3xl lg:h-140 2xl:h-175 2xl:rounded-4xl"
+	>
+		<img
+			src={heroImage.src}
+			srcset={heroImage.srcset}
+			sizes={heroImage.sizes}
+			alt={copy.alt}
+			width={heroImage.width}
+			height={heroImage.height}
+			class="absolute inset-0 h-full w-full object-cover object-[62%_center] sm:object-center"
+			loading="eager"
+			fetchpriority="high"
+		/>
+		<div
+			class="absolute inset-0 bg-linear-to-r from-cream-100 via-cream-100/85 to-cream-100/10 sm:via-cream-100/75"
+		>
 		</div>
 
-		<div class="relative order-1 mx-auto w-full max-w-md lg:order-2 lg:max-w-none">
-			<div class="relative aspect-[4/5] overflow-hidden rounded-t-[999px] rounded-b-[28px] bg-brand-peach">
-				<img
-					src={heroImage.src}
-					alt={copy.alt}
-					width={heroImage.width}
-					height={heroImage.height}
-					class="absolute inset-0 h-full w-full object-cover object-[50%_30%]"
-					loading="eager"
-					fetchpriority="high"
-				/>
-			</div>
-			<div class="absolute -bottom-5 left-4 flex items-center gap-3 rounded-2xl border border-border bg-white px-4 py-3 shadow-soft sm:left-auto sm:-right-4">
-				<img src="/images/logo_m.avif" alt="" width="40" height="40" class="size-9 object-contain" loading="lazy" />
-				<div>
-					<p class="font-heading text-base leading-tight font-bold text-charcoal">{copy.badgeName}</p>
-					<p class="text-sm leading-tight text-muted">{copy.badgeRole}</p>
-				</div>
+		<div
+			class="relative z-10 flex h-full max-w-[88%] flex-col justify-center p-5 text-left sm:max-w-lg sm:p-10 lg:max-w-120 lg:p-11 2xl:max-w-lg 2xl:p-14">
+			<h1
+				class="font-heading text-[clamp(1.75rem,8vw,2.25rem)] font-extrabold leading-[1.02] tracking-[-0.02em] text-black/80 sm:text-6xl lg:text-[4.8rem] 2xl:text-7xl"
+			>
+				{copy.title}
+			</h1>
+			<p class="mt-4 max-w-65 text-sm leading-[1.4] font-normal text-muted sm:mt-6 sm:max-w-md sm:text-xl lg:mt-5 lg:max-w-sm 2xl:mt-6 2xl:max-w-md 2xl:text-2xl">
+				{copy.description}
+			</p>
+			<div class="mt-4 flex flex-col gap-4 sm:mt-8 sm:flex-row lg:mt-6 2xl:mt-8">
+				<a
+					class="w-fit justify-center rounded-full font-semibold transition-colors bg-orange-500 px-4 py-2.5 text-xs text-white hover:bg-orange-600 flex items-center gap-x-2 uppercase sm:px-6 sm:py-3 sm:text-base sm:gap-x-5 lg:px-5 lg:py-2.5 lg:gap-x-4 2xl:px-6 2xl:py-3 2xl:text-lg 2xl:gap-x-5"
+					href={talkPath(locale)}>{copy.cta}
+						<span class="flex items-center justify-center rounded-full bg-[#f97c07] p-1.5 sm:p-2.5 lg:p-2 2xl:p-2.5">
+							<ArrowRight class="text-white size-3 sm:size-5 lg:size-4 2xl:size-5" />
+					</span>
+				</a>
 			</div>
 		</div>
 	</div>

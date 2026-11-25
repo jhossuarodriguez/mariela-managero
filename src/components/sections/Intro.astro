@@ -1,5 +1,6 @@
 ---
 import ArrowRight from "@/assets/icons/arrow-right.svg";
+import { profileImage } from "@/data/profileImage";
 import { type Locale, ui } from "@/i18n/content";
 
 interface Props {
@@ -15,7 +16,28 @@ const PORTFOLIO_URL = "https://mariela-managero.vercel.app/";
 	class="bg-cream-100 px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24 2xl:px-14"
 	aria-labelledby="intro-title"
 >
-	<div class="mx-auto grid w-full max-w-340 gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+	<div class="mx-auto grid w-full max-w-340 items-center gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+		<div class="relative mx-auto w-full max-w-sm lg:max-w-md">
+			<div class="relative aspect-[4/5] overflow-hidden rounded-t-[999px] rounded-b-[28px] bg-brand-peach shadow-soft">
+				<img
+					src={profileImage.src}
+					alt={copy.photoAlt}
+					width={profileImage.width}
+					height={profileImage.height}
+					class="absolute inset-0 h-full w-full object-cover object-[50%_30%]"
+					loading="lazy"
+					decoding="async"
+				/>
+			</div>
+			<div class="absolute -bottom-5 left-1/2 flex w-[max-content] -translate-x-1/2 items-center gap-3 whitespace-nowrap rounded-2xl border border-border bg-white px-4 py-3 shadow-soft">
+				<img src="/images/logo_m.avif" alt="" width="40" height="40" class="size-9 object-contain" loading="lazy" />
+				<div>
+					<p class="font-heading text-base leading-tight font-bold text-charcoal">{copy.badgeName}</p>
+					<p class="text-sm leading-tight text-muted">{copy.badgeRole}</p>
+				</div>
+			</div>
+		</div>
+
 		<div>
 			<p class="inline-flex rounded-full bg-brand-sand px-3.5 py-1.5 text-sm font-semibold text-charcoal">{copy.eyebrow}</p>
 			<h2 id="intro-title" class="mt-5 font-heading text-4xl leading-[1.05] font-bold tracking-[-0.02em] text-charcoal sm:text-5xl">
@@ -31,15 +53,15 @@ const PORTFOLIO_URL = "https://mariela-managero.vercel.app/";
 				{copy.cta}
 				<ArrowRight class="size-4" aria-hidden="true" />
 			</a>
-		</div>
 
-		<dl class="grid grid-cols-2 gap-px self-center overflow-hidden rounded-2xl border border-border bg-border">
-			{copy.facts.map((fact) => (
-				<div class="flex flex-col gap-1 bg-warm-white p-6 sm:p-8">
-					<dt class="order-2 text-sm text-muted sm:text-base">{fact.label}</dt>
-					<dd class="order-1 font-heading text-xl font-bold text-charcoal sm:text-2xl">{fact.value}</dd>
-				</div>
-			))}
-		</dl>
+			<dl class="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border">
+				{copy.facts.map((fact) => (
+					<div class="flex flex-col gap-1 bg-warm-white p-5 sm:p-6">
+						<dt class="order-2 text-sm text-muted sm:text-base">{fact.label}</dt>
+						<dd class="order-1 font-heading text-lg font-bold text-charcoal sm:text-xl">{fact.value}</dd>
+					</div>
+				))}
+			</dl>
+		</div>
 	</div>
 </section>
