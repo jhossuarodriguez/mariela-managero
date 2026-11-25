@@ -1,121 +1,201 @@
 ---
-import "../styles/global.css";
+import "@/styles/global.css";
+import {
+	locations,
+	US_TIME_ZONE_PREFIXES,
+	US_TIME_ZONES,
+} from "@/data/locations";
+import { organizationSchema } from "@/data/organization";
+import type { Locale } from "@/i18n/content";
 
-export interface Props {
+interface Props {
 	title?: string;
 	description?: string;
+	locale?: Locale;
+	canonicalPath?: string;
+	alternatePath?: string;
+	image?: string;
+	imageAlt?: string;
+	noindex?: boolean;
+	schema?: Record<string, unknown> | Record<string, unknown>[];
+	preloadImage?: { href: string; srcset?: string; sizes?: string };
 }
 
 const {
-	title = "Mariela Arias - Desarrolladora WordPress & Product Owner",
-	description = "Desarrolladora WordPress especializada en sitios web personalizados, e-commerce y soluciones digitales. También Product Owner certificada en metodologías ágiles y Scrum.",
+	title = "Managero",
+	description = "Desarrollo web, tiendas en línea, apps y consultoría TI en Santo Domingo.",
+	locale = "es",
+	canonicalPath = Astro.url.pathname,
+	alternatePath,
+	image = "/images/og/default.jpg",
+	imageAlt,
+	noindex = false,
+	schema,
+	preloadImage,
 } = Astro.props;
+const canonical = new URL(canonicalPath, Astro.site);
+const alternateLocale = locale === "es" ? "en" : "es";
+const socialImage = new URL(image, Astro.site);
+const socialImageAlt = imageAlt ?? title;
+
+const usContact = {
+	phoneHref: locations.us.phone.href,
+	phoneDisplay: locations.us.phone.display,
+	address: locations.us.label[locale],
+};
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={locale}>
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-		<!-- BFCache optimization -->
-		<meta name="format-detection" content="telephone=no" />
-
-		<!-- Preload critical fonts -->
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-		<!-- DNS Prefetch for social media domains -->
-		<link rel="dns-prefetch" href="//linkedin.com" />
-		<link rel="dns-prefetch" href="//github.com" />
-		<link rel="dns-prefetch" href="//x.com" />
-		<!-- Favicon optimized -->
-		<link rel="icon" type="image/webp" href="/favicon.webp" />
-		<link rel="apple-touch-icon" href="/favicon.webp" />
-
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content={description} />
-
-		<!-- Open Graph / Facebook -->
+		<meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large"} />
+		{!noindex && <link rel="canonical" href={canonical} />}
+		{!noindex && <link rel="alternate" hreflang={locale} href={canonical} />}
+		{!noindex && alternatePath && <link rel="alternate" hreflang={alternateLocale} href={new URL(alternatePath, Astro.site)} />}
+		{!noindex && alternatePath && <link rel="alternate" hreflang="x-default" href={new URL(locale === "es" ? canonicalPath : alternatePath, Astro.site)} />}
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
 		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Managero" />
+		<meta property="og:locale" content={locale === "es" ? "es_DO" : "en_US"} />
+		<meta property="og:locale:alternate" content={locale === "es" ? "en_US" : "es_DO"} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-
-		<!-- Twitter -->
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:title" content={title} />
-		<meta property="twitter:description" content={description} />
-
-		<!-- Additional SEO -->
-		<meta name="robots" content="index, follow" />
-		<meta name="author" content="Mariela Arias" />
-		<meta
-			name="keywords"
-			content="WordPress, desarrolladora web, diseño web, e-commerce, WooCommerce, PHP, JavaScript, HTML, CSS, Product Owner, Scrum Master, República Dominicana"
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={socialImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={socialImageAlt} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={socialImage} />
+		<meta name="twitter:image:alt" content={socialImageAlt} />
+		<title>{title}</title>
+		<script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-97C3BPX153"></script>
+		<script is:inline>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-97C3BPX153');
+		</script>
+		<script is:inline type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+		{schema && <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />}
+		{preloadImage && (
+			<link
+				rel="preload"
+				as="image"
+				href={preloadImage.href}
+				imagesrcset={preloadImage.srcset}
+				imagesizes={preloadImage.sizes}
+				fetchpriority="high"
+			/>
+		)}
+		<link
+			rel="preload"
+			href="/fonts/nunito-v32-latin-regular.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
 		/>
-
-		<!-- Critical CSS inline for faster rendering -->
-		<style>
-			/* Critical above-the-fold styles */
-			body {
-				font-family:
-					system-ui,
-					-apple-system,
-					sans-serif;
-				margin: 0;
-				background: white;
-				-webkit-font-smoothing: antialiased;
-				text-rendering: optimizeLegibility;
-			}
-
-			/* Hero section critical styles */
-			.hero-content {
-				min-height: 100vh;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
-
-			/* Header critical styles */
-			header {
-				position: fixed;
-				top: 0;
-				width: 100%;
-				z-index: 50;
-				background: rgba(255, 255, 255, 0.95);
-				backdrop-filter: blur(12px);
-			}
-
-			/* Prevent layout shift */
-			img {
-				max-width: 100%;
-				height: auto;
-			}
-		</style>
+		<link
+			rel="preload"
+			href="/fonts/nordeco-bold.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
 	</head>
-	<body class="min-h-screen bg-white">
+	<body
+		class="min-h-screen bg-warm-white text-charcoal antialiased font-sans"
+	>
 		<slot />
+		<script is:inline define:vars={{ usContact, usZones: US_TIME_ZONES, usPrefixes: US_TIME_ZONE_PREFIXES }}>
+			(() => {
+				try {
+					const zone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+					const inUS =
+						usZones.includes(zone) ||
+						usPrefixes.some((prefix) => zone.startsWith(prefix));
+					if (!inUS) return;
+
+					for (const link of document.querySelectorAll("[data-contact-phone]")) {
+						link.setAttribute("href", "tel:" + usContact.phoneHref);
+					}
+					for (const el of document.querySelectorAll("[data-contact-phone-text]")) {
+						el.textContent = usContact.phoneDisplay;
+					}
+					for (const el of document.querySelectorAll("[data-contact-address-text]")) {
+						el.textContent = usContact.address;
+					}
+				} catch {
+				}
+			})();
+		</script>
 	</body>
 </html>
 
 <style>
 	html {
 		scroll-behavior: smooth;
-		scroll-padding-top: 80px; /* Offset for fixed header */
+		overflow-x: clip;
 	}
 
 	body {
-		margin: 0;
-		width: 100%;
-		min-height: 100vh;
-		font-family:
-			system-ui,
-			-apple-system,
-			BlinkMacSystemFont,
-			"Segoe UI",
-			Roboto,
-			sans-serif;
-		-webkit-font-smoothing: antialiased;
-		line-height: 1.5;
+		overflow-x: clip;
+	}
+
+	html.lenis,
+	html.lenis body {
+		height: auto;
+	}
+
+	.lenis.lenis-smooth {
+		scroll-behavior: auto;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
 	}
 </style>
+
+<script>
+	const wanted =
+		!window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+		window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+	const start = async () => {
+		const { default: Lenis } = await import("lenis");
+		const lenis = new Lenis({ duration: 1.8, smoothWheel: true });
+		const frame = (time: number) => {
+			lenis.raf(time);
+			requestAnimationFrame(frame);
+		};
+		requestAnimationFrame(frame);
+	};
+
+	if (wanted) {
+		const scheduleStart = () => {
+			requestAnimationFrame(() => {
+				setTimeout(() => {
+					if (typeof requestIdleCallback === "function") {
+						requestIdleCallback(start, { timeout: 2000 });
+					} else {
+						void start();
+					}
+				}, 200);
+			});
+		};
+
+		if (document.readyState === "complete") {
+			scheduleStart();
+		} else {
+			window.addEventListener("load", scheduleStart, { once: true });
+		}
+	}
+</script>

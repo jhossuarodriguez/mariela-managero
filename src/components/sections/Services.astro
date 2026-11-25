@@ -1,0 +1,75 @@
+---
+import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
+import Code from "@/assets/icons/code.svg";
+import Layers from "@/assets/icons/layers.svg";
+import PenTool from "@/assets/icons/pen-tool.svg";
+import Search from "@/assets/icons/search.svg";
+import ShoppingCart from "@/assets/icons/shopping-cart.svg";
+import Smartphone from "@/assets/icons/smartphone.svg";
+import Wrench from "@/assets/icons/wrench.svg";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { getAllServices, type ServiceId } from "@/data/services";
+import { type Locale, ui } from "@/i18n/content";
+
+interface Props {
+	locale?: Locale;
+}
+const { locale = "es" } = Astro.props;
+const copy = ui[locale].services;
+
+// Orden de lectura: lo que más se vende primero.
+const order: ServiceId[] = [
+	"web",
+	"ecommerce",
+	"apps",
+	"consulting",
+	"branding",
+	"seo",
+	"maintenance",
+];
+const icons = {
+	web: Code,
+	ecommerce: ShoppingCart,
+	apps: Smartphone,
+	consulting: Layers,
+	branding: PenTool,
+	seo: Search,
+	maintenance: Wrench,
+};
+const all = getAllServices(locale);
+const services = order
+	.map((id) => all.find((service) => service.id === id))
+	.filter((service) => service !== undefined);
+---
+
+<section id={locale === "es" ? "servicios" : "services"} class="bg-warm-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24 2xl:px-14">
+	<div class="mx-auto w-full max-w-340">
+		<SectionHeading eyebrow={copy.eyebrow} title={copy.title} description={copy.description} />
+
+		<ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+			{services.map((service, index) => {
+				const Icon = icons[service.id];
+				const highlighted = index === 0;
+				return (
+					<li class:list={[index === 0 && "sm:col-span-2 lg:col-span-1"]}>
+						<a
+							href={service.href}
+							class:list={[
+								"group flex h-full min-h-52 flex-col rounded-2xl border p-6 transition hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-orange",
+								highlighted ? "border-brand-primary bg-brand-primary text-charcoal" : "border-border bg-white text-charcoal hover:border-brand-peach",
+							]}
+						>
+							<Icon class:list={["size-7", highlighted ? "text-charcoal" : "text-brand-orange"]} aria-hidden="true" />
+							<h3 class="mt-5 font-heading text-xl leading-tight font-bold">{service.title}</h3>
+							<p class:list={["mt-2 text-[0.95rem] leading-relaxed", highlighted ? "text-charcoal/80" : "text-muted"]}>{service.description}</p>
+							<span class:list={["mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold", highlighted ? "text-charcoal" : "text-brand-ink"]}>
+								{copy.view}
+								<ArrowUpRight class="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
+							</span>
+						</a>
+					</li>
+				);
+			})}
+		</ul>
+	</div>
+</section>
