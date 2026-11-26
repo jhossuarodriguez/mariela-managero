@@ -73,6 +73,13 @@ const projects: ProjectEntry[] = [
 		url: "https://www.ricaspizza.com/",
 	},
 	{
+		title: "Maps for Mom",
+		country: "us",
+		services: ["branding"],
+		location: { es: "EE. UU.", en: "USA" },
+		mockup: "/images/proyectos/maps-for-mom-mockup.avif",
+	},
+	{
 		title: "All In One Contractor",
 		country: "us",
 		services: ["branding"],
