@@ -63,8 +63,9 @@ export const ui = {
 		projects: {
 			eyebrow: "Trabajos",
 			title: "Proyectos recientes",
-			description: "Algunos negocios con los que he trabajado.",
-			pending: "Captura en camino",
+			description: "Negocios en Estados Unidos y República Dominicana con los que he trabajado.",
+			pending: "Foto en camino",
+			countries: { us: "Estados Unidos", do: "República Dominicana" },
 		},
 		stack: {
 			eyebrow: "Herramientas",
@@ -236,8 +237,9 @@ export const ui = {
 		projects: {
 			eyebrow: "Work",
 			title: "Recent projects",
-			description: "A few of the businesses I've worked with.",
-			pending: "Screenshot coming soon",
+			description: "Businesses in the United States and the Dominican Republic I've worked with.",
+			pending: "Photo coming soon",
+			countries: { us: "United States", do: "Dominican Republic" },
 		},
 		stack: {
 			eyebrow: "Tools",

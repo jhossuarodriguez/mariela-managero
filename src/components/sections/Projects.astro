@@ -1,6 +1,7 @@
 ---
+import MapPin from "@/assets/icons/map-pin.svg";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
-import { getProjects } from "@/data/projects";
+import { type Country, getProjects } from "@/data/projects";
 import { type Locale, ui } from "@/i18n/content";
 
 interface Props {
@@ -9,38 +10,49 @@ interface Props {
 const { locale = "es" } = Astro.props;
 const copy = ui[locale].projects;
 const projects = getProjects(locale);
+const countries: Country[] = ["us", "do"];
 ---
 
 <section id={locale === "es" ? "proyectos" : "projects"} class="bg-brand-sand/40 px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24 2xl:px-14">
 	<div class="mx-auto w-full max-w-340">
 		<SectionHeading eyebrow={copy.eyebrow} title={copy.title} description={copy.description} />
 
-		<ul class="mt-10 grid gap-6 md:grid-cols-3">
-			{projects.map((project) => (
-				<li>
-					<article>
-						<div class="overflow-hidden rounded-2xl border border-brand-sand bg-white">
-							<div class="flex items-center gap-1.5 border-b border-brand-sand px-4 py-2.5" aria-hidden="true">
-								<span class="size-2.5 rounded-full bg-brand-sand"></span>
-								<span class="size-2.5 rounded-full bg-brand-sand"></span>
-								<span class="size-2.5 rounded-full bg-brand-sand"></span>
-							</div>
-							{project.image ? (
-								<img src={project.image} alt={project.title} class="aspect-[16/10] w-full object-cover object-top" loading="lazy" />
-							) : (
-								<div class="flex aspect-[16/10] flex-col items-center justify-center gap-2 bg-cream-100 text-center">
-									<span class="font-heading text-3xl font-bold text-brand-ink">{project.title}</span>
-									<span class="text-xs font-semibold tracking-wide text-muted uppercase">{copy.pending}</span>
-								</div>
-							)}
-						</div>
-						<h3 class="mt-4 font-heading text-xl font-bold text-charcoal">
-							{project.url ? <a href={project.url} target="_blank" rel="noopener" class="hover:text-brand-ink">{project.title}</a> : project.title}
-						</h3>
-						<p class="mt-1 text-sm text-muted">{project.category}</p>
-					</article>
-				</li>
-			))}
-		</ul>
+		{countries.map((country) => {
+			const group = projects.filter((project) => project.country === country);
+			return (
+				<div class="mt-12 first-of-type:mt-10">
+					<h3 class="flex items-center gap-3 text-sm font-bold tracking-[0.16em] text-brand-ink uppercase">
+						{copy.countries[country]}
+						<span class="rounded-full bg-white px-2.5 py-0.5 text-xs tracking-normal text-muted">{group.length}</span>
+					</h3>
+					<ul class="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+						{group.map((project) => (
+							<li>
+								<article class="h-full overflow-hidden rounded-2xl border border-brand-sand bg-white transition hover:-translate-y-0.5 hover:shadow-soft">
+									{project.image ? (
+										<img src={project.image} alt={project.title} class="aspect-[16/10] w-full object-cover object-top" loading="lazy" decoding="async" />
+									) : (
+										<div class="flex aspect-[16/10] flex-col items-center justify-center gap-2 bg-cream-100 px-4 text-center">
+											<span class="font-heading text-2xl font-bold text-brand-ink">{project.title}</span>
+											<span class="text-xs font-semibold tracking-wide text-muted uppercase">{copy.pending}</span>
+										</div>
+									)}
+									<div class="border-l-4 border-brand-primary px-5 py-4">
+										<h4 class="font-heading text-lg leading-tight font-bold text-charcoal">
+											{project.url ? <a href={project.url} target="_blank" rel="noopener" class="hover:text-brand-ink">{project.title}</a> : project.title}
+										</h4>
+										<p class="mt-1 text-sm font-semibold text-brand-ink">{project.category}</p>
+										<p class="mt-1.5 flex items-center gap-1.5 text-sm text-muted">
+											<MapPin class="size-3.5 shrink-0" aria-hidden="true" />
+											{project.location}
+										</p>
+									</div>
+								</article>
+							</li>
+						))}
+					</ul>
+				</div>
+			);
+		})}
 	</div>
 </section>
