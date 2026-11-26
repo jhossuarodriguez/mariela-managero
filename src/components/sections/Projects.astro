@@ -44,7 +44,7 @@ const arrowClass =
 							{project.mockup ? (
 								<img
 									src={project.mockup}
-									alt={project.title}
+									alt={`${project.title} · ${project.category}`}
 									class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
 									loading="lazy"
 									decoding="async"
@@ -55,7 +55,7 @@ const arrowClass =
 									<div class="w-[84%] rounded-t-[12px] bg-[#1d1d1f] p-[1.8%] pb-[2.4%] transition-transform duration-500 group-hover:-translate-y-1">
 										<img
 											src={project.image}
-											alt={project.title}
+											alt={`${project.title} · ${project.category}`}
 											class="aspect-[16/10] w-full rounded-[3px] object-cover object-center"
 											loading="lazy"
 											decoding="async"

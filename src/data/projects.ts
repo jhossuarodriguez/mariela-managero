@@ -75,7 +75,7 @@ const projects: ProjectEntry[] = [
 	{
 		title: "Maps for Mom",
 		country: "us",
-		services: ["branding", "webDesign"],
+		services: ["webDesign"],
 		location: us("Orlando, Florida"),
 		mockup: "/images/proyectos/maps-for-mom-website.avif",
 	},
@@ -104,6 +104,14 @@ const projects: ProjectEntry[] = [
 		country: "us",
 		services: ["branding"],
 		location: us("Mount Dora, Florida"),
+	},
+	// Branding de Maps for Mom: tarjeta aparte del sitio web y separada de ella en el carrusel.
+	{
+		title: "Maps for Mom",
+		country: "us",
+		services: ["branding"],
+		location: us("Orlando, Florida"),
+		mockup: "/images/proyectos/maps-for-mom-branding.avif",
 	},
 	{
 		title: "Embracing Nature",
