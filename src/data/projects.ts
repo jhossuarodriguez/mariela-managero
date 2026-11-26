@@ -143,8 +143,21 @@ const projects: ProjectEntry[] = [
 	},
 ];
 
+// Orden del carrusel: tres de Estados Unidos y uno de República Dominicana, en ciclo,
+// para dar prioridad a los clientes estadounidenses.
+const prioritized = (): ProjectEntry[] => {
+	const usQueue = projects.filter((project) => project.country === "us");
+	const doQueue = projects.filter((project) => project.country === "do");
+	const ordered: ProjectEntry[] = [];
+	while (usQueue.length > 0 || doQueue.length > 0) {
+		ordered.push(...usQueue.splice(0, 3));
+		ordered.push(...doQueue.splice(0, 1));
+	}
+	return ordered;
+};
+
 export const getProjects = (locale: Locale): Project[] =>
-	projects.map(({ services, location, ...rest }) => ({
+	prioritized().map(({ services, location, ...rest }) => ({
 		...rest,
 		category: services
 			.map((service) => serviceLabels[locale][service])

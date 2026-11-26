@@ -66,6 +66,9 @@ export const ui = {
 			description: "Negocios en Estados Unidos y República Dominicana con los que he trabajado.",
 			pending: "Foto en camino",
 			countries: { us: "Estados Unidos", do: "República Dominicana" },
+			previous: "Proyectos anteriores",
+			next: "Proyectos siguientes",
+			goTo: "Ir al grupo",
 		},
 		stack: {
 			eyebrow: "Herramientas",
@@ -240,6 +243,9 @@ export const ui = {
 			description: "Businesses in the United States and the Dominican Republic I've worked with.",
 			pending: "Photo coming soon",
 			countries: { us: "United States", do: "Dominican Republic" },
+			previous: "Previous projects",
+			next: "Next projects",
+			goTo: "Go to group",
 		},
 		stack: {
 			eyebrow: "Tools",
