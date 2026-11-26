@@ -1,26 +1,166 @@
 import type { Locale } from "@/i18n/content";
 
-export interface Project {
+export type Country = "us" | "do";
+
+type Service =
+	| "maintenance"
+	| "branding"
+	| "rebranding"
+	| "webDesign"
+	| "marketing"
+	| "saas";
+
+interface ProjectEntry {
 	title: string;
-	category: string;
-	/** Captura real del proyecto. Mientras no exista, se muestra un marco con el nombre. */
+	country: Country;
+	services: Service[];
+	location: Record<Locale, string>;
+	/** Foto o captura del proyecto en /public/images/proyectos/. Mientras no exista, se muestra un marco con el nombre. */
 	image?: string;
 	url?: string;
 }
 
-// Proyectos tomados del boceto de la nueva home. Faltan las capturas reales:
-// guárdalas en /public/images/proyectos/ y añade `image` a cada uno.
-const projectsByLocale: Record<Locale, Project[]> = {
-	es: [
-		{ title: "Embracing Nature", category: "Tienda en línea · Bienestar" },
-		{ title: "Arica Pizzas", category: "Sitio web · Restaurante" },
-		{ title: "App de servicios", category: "UX/UI · Aplicación móvil" },
-	],
-	en: [
-		{ title: "Embracing Nature", category: "Online store · Wellness" },
-		{ title: "Arica Pizzas", category: "Website · Restaurant" },
-		{ title: "Services app", category: "UX/UI · Mobile app" },
-	],
+export interface Project {
+	title: string;
+	country: Country;
+	category: string;
+	location: string;
+	image?: string;
+	url?: string;
+}
+
+const serviceLabels: Record<Locale, Record<Service, string>> = {
+	es: {
+		maintenance: "Mantenimiento web",
+		branding: "Branding",
+		rebranding: "Rebranding",
+		webDesign: "Diseño web",
+		marketing: "Marketing digital",
+		saas: "Desarrollo de aplicación SaaS",
+	},
+	en: {
+		maintenance: "Website maintenance",
+		branding: "Branding",
+		rebranding: "Rebranding",
+		webDesign: "Web design",
+		marketing: "Digital marketing",
+		saas: "SaaS app development",
+	},
 };
 
-export const getProjects = (locale: Locale) => projectsByLocale[locale];
+const us = (place: string) => ({
+	es: `${place}, EE. UU.`,
+	en: `${place}, USA`,
+});
+const rd = (place?: string) => ({
+	es: place ? `${place}, República Dominicana` : "República Dominicana",
+	en: place ? `${place}, Dominican Republic` : "Dominican Republic",
+});
+
+// Para agregar la foto de un cliente: guárdala en /public/images/proyectos/
+// y añade `image: "/images/proyectos/<archivo>"` a su entrada.
+const projects: ProjectEntry[] = [
+	// Estados Unidos
+	{
+		title: "Ricca’s Pizza",
+		country: "us",
+		services: ["maintenance"],
+		location: us("Milford, Delaware"),
+	},
+	{
+		title: "Romano’s Restaurant",
+		country: "us",
+		services: ["maintenance"],
+		location: us("Milford, Delaware"),
+	},
+	{
+		title: "All In One Contractor",
+		country: "us",
+		services: ["branding"],
+		location: us("Atlanta, Georgia"),
+	},
+	{
+		title: "PBI Photo",
+		country: "us",
+		services: ["webDesign", "marketing"],
+		location: us("Miami, Florida"),
+	},
+	{
+		title: "Mount Dora Social (MDS)",
+		country: "us",
+		services: ["branding"],
+		location: us("Mount Dora, Florida"),
+	},
+	{
+		title: "Embracing Nature",
+		country: "us",
+		services: ["webDesign", "marketing"],
+		location: us("South Carolina"),
+	},
+	{
+		title: "Innovative Remodeling & Design",
+		country: "us",
+		services: ["webDesign", "marketing"],
+		location: us("Milford, Delaware"),
+	},
+	{
+		title: "Divinas Beauty Salon",
+		country: "us",
+		services: ["branding"],
+		location: us("Lawrence, Massachusetts"),
+	},
+	{
+		title: "JAMI & CO Design",
+		country: "us",
+		services: ["rebranding"],
+		location: us("Bucks County, Pennsylvania"),
+	},
+	// República Dominicana
+	{
+		title: "Antojitos Dulce y Salado",
+		country: "do",
+		services: ["rebranding"],
+		location: rd("Santo Domingo"),
+	},
+	{
+		title: "Pamela Mieses",
+		country: "do",
+		services: ["rebranding"],
+		location: rd(),
+	},
+	{
+		title: "El Elyon Centro Diagnóstico",
+		country: "do",
+		services: ["branding", "marketing"],
+		location: rd("Santo Domingo Norte"),
+	},
+	{ title: "CondoHub", country: "do", services: ["saas"], location: rd() },
+	{
+		title: "Dra. Halley Moya",
+		country: "do",
+		services: ["rebranding"],
+		location: rd("Santo Domingo"),
+	},
+];
+
+// Orden del carrusel: tres de Estados Unidos y uno de República Dominicana, en ciclo,
+// para dar prioridad a los clientes estadounidenses.
+const prioritized = (): ProjectEntry[] => {
+	const usQueue = projects.filter((project) => project.country === "us");
+	const doQueue = projects.filter((project) => project.country === "do");
+	const ordered: ProjectEntry[] = [];
+	while (usQueue.length > 0 || doQueue.length > 0) {
+		ordered.push(...usQueue.splice(0, 3));
+		ordered.push(...doQueue.splice(0, 1));
+	}
+	return ordered;
+};
+
+export const getProjects = (locale: Locale): Project[] =>
+	prioritized().map(({ services, location, ...rest }) => ({
+		...rest,
+		category: services
+			.map((service) => serviceLabels[locale][service])
+			.join(" · "),
+		location: location[locale],
+	}));

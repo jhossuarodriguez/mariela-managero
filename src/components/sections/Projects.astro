@@ -1,4 +1,7 @@
 ---
+import ArrowLeft from "@/assets/icons/arrow-left.svg";
+import ArrowRight from "@/assets/icons/arrow-right.svg";
+import MapPin from "@/assets/icons/map-pin.svg";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
 import { getProjects } from "@/data/projects";
 import { type Locale, ui } from "@/i18n/content";
@@ -9,38 +12,158 @@ interface Props {
 const { locale = "es" } = Astro.props;
 const copy = ui[locale].projects;
 const projects = getProjects(locale);
+const pageCount = Math.ceil(projects.length / 3);
+const arrowClass =
+	"flex size-11 cursor-pointer items-center justify-center rounded-full border border-charcoal/15 bg-white text-charcoal transition hover:border-charcoal hover:shadow-soft disabled:cursor-default disabled:opacity-40 disabled:hover:border-charcoal/15 disabled:hover:shadow-none sm:size-12";
 ---
 
 <section id={locale === "es" ? "proyectos" : "projects"} class="bg-brand-sand/40 px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24 2xl:px-14">
-	<div class="mx-auto w-full max-w-340">
-		<SectionHeading eyebrow={copy.eyebrow} title={copy.title} description={copy.description} />
+	<div class="mx-auto w-full max-w-340" data-slider>
+		<div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+			<SectionHeading eyebrow={copy.eyebrow} title={copy.title} description={copy.description} />
+			<div class="flex shrink-0 gap-3">
+				<button type="button" class={arrowClass} aria-label={copy.previous} data-slider-prev disabled>
+					<ArrowLeft class="size-5" aria-hidden="true" />
+				</button>
+				<button type="button" class={arrowClass} aria-label={copy.next} data-slider-next>
+					<ArrowRight class="size-5" aria-hidden="true" />
+				</button>
+			</div>
+		</div>
 
-		<ul class="mt-10 grid gap-6 md:grid-cols-3">
+		<ul
+			class="slider-track -mx-4 mt-10 flex snap-x snap-mandatory scroll-px-4 gap-6 overflow-x-auto scroll-smooth px-4 pb-2 sm:mx-0 sm:scroll-px-0 sm:px-0"
+			data-slider-track
+			tabindex="0"
+			aria-label={copy.title}
+		>
 			{projects.map((project) => (
-				<li>
-					<article>
-						<div class="overflow-hidden rounded-2xl border border-brand-sand bg-white">
-							<div class="flex items-center gap-1.5 border-b border-brand-sand px-4 py-2.5" aria-hidden="true">
-								<span class="size-2.5 rounded-full bg-brand-sand"></span>
-								<span class="size-2.5 rounded-full bg-brand-sand"></span>
-								<span class="size-2.5 rounded-full bg-brand-sand"></span>
-							</div>
+				<li class="w-[85%] shrink-0 snap-start sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]">
+					<article class="h-full overflow-hidden rounded-2xl border border-brand-sand bg-white">
+						<div class="relative">
 							{project.image ? (
-								<img src={project.image} alt={project.title} class="aspect-[16/10] w-full object-cover object-top" loading="lazy" />
+								<img src={project.image} alt={project.title} class="aspect-[16/10] w-full object-cover object-top" loading="lazy" decoding="async" />
 							) : (
-								<div class="flex aspect-[16/10] flex-col items-center justify-center gap-2 bg-cream-100 text-center">
-									<span class="font-heading text-3xl font-bold text-brand-ink">{project.title}</span>
+								<div class="flex aspect-[16/10] flex-col items-center justify-center gap-2 bg-cream-100 px-4 text-center">
+									<span class="font-heading text-2xl font-bold text-brand-ink">{project.title}</span>
 									<span class="text-xs font-semibold tracking-wide text-muted uppercase">{copy.pending}</span>
 								</div>
 							)}
+							<span class="absolute top-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-charcoal shadow-soft">
+								{copy.countries[project.country]}
+							</span>
 						</div>
-						<h3 class="mt-4 font-heading text-xl font-bold text-charcoal">
-							{project.url ? <a href={project.url} target="_blank" rel="noopener" class="hover:text-brand-ink">{project.title}</a> : project.title}
-						</h3>
-						<p class="mt-1 text-sm text-muted">{project.category}</p>
+						<div class="border-l-4 border-brand-primary px-5 py-4">
+							<h3 class="font-heading text-lg leading-tight font-bold text-charcoal">
+								{project.url ? <a href={project.url} target="_blank" rel="noopener" class="hover:text-brand-ink">{project.title}</a> : project.title}
+							</h3>
+							<p class="mt-1 text-sm font-semibold text-brand-ink">{project.category}</p>
+							<p class="mt-1.5 flex items-center gap-1.5 text-sm text-muted">
+								<MapPin class="size-3.5 shrink-0" aria-hidden="true" />
+								{project.location}
+							</p>
+						</div>
 					</article>
 				</li>
 			))}
 		</ul>
+
+		<div class="mt-8 flex justify-center gap-2" data-slider-dots>
+			{Array.from({ length: pageCount }, (_, index) => (
+				<button
+					type="button"
+					aria-label={`${copy.goTo} ${index + 1}`}
+					aria-current={index === 0 ? "true" : "false"}
+					class="h-2 w-2 cursor-pointer rounded-full bg-charcoal/20 transition-all aria-[current=true]:w-6 aria-[current=true]:bg-brand-ink"
+					data-slider-dot
+				></button>
+			))}
+		</div>
 	</div>
 </section>
+
+<style>
+	.slider-track {
+		scrollbar-width: none;
+	}
+
+	.slider-track::-webkit-scrollbar {
+		display: none;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.slider-track {
+			scroll-behavior: auto;
+		}
+	}
+</style>
+
+<script>
+	document.querySelectorAll<HTMLElement>("[data-slider]").forEach((slider) => {
+		const track = slider.querySelector<HTMLElement>("[data-slider-track]");
+		const prev = slider.querySelector<HTMLButtonElement>("[data-slider-prev]");
+		const next = slider.querySelector<HTMLButtonElement>("[data-slider-next]");
+		const dotsBox = slider.querySelector<HTMLElement>("[data-slider-dots]");
+		if (!track || !prev || !next || !dotsBox) return;
+
+		const cards = Array.from(track.children) as HTMLElement[];
+
+		// Cuántas tarjetas caben a la vez (3 en escritorio, 2 en tablet, 1 en móvil).
+		const perView = () => {
+			const card = cards[0];
+			if (!card) return 1;
+			const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+			return Math.max(1, Math.round((track.clientWidth + gap) / (card.offsetWidth + gap)));
+		};
+		const pages = () => Math.ceil(cards.length / perView());
+		const currentPage = () => {
+			const card = cards[0];
+			if (!card) return 0;
+			const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+			const firstVisible = Math.round(track.scrollLeft / (card.offsetWidth + gap));
+			const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+			return atEnd ? pages() - 1 : Math.floor(firstVisible / perView());
+		};
+		const goTo = (page: number) => {
+			const target = cards[Math.min(page * perView(), cards.length - 1)];
+			if (target) track.scrollTo({ left: target.offsetLeft - cards[0].offsetLeft });
+		};
+
+		const renderDots = () => {
+			const total = pages();
+			const existing = Array.from(dotsBox.querySelectorAll<HTMLButtonElement>("[data-slider-dot]"));
+			const template = existing[0];
+			if (!template) return;
+			if (existing.length !== total) {
+				dotsBox.replaceChildren(
+					...Array.from({ length: total }, (_, i) => {
+						const dot = template.cloneNode() as HTMLButtonElement;
+						dot.setAttribute("aria-label", template.getAttribute("aria-label")!.replace(/\d+$/, String(i + 1)));
+						dot.addEventListener("click", () => goTo(i));
+						return dot;
+					}),
+				);
+			}
+		};
+
+		const update = () => {
+			const page = currentPage();
+			prev.disabled = track.scrollLeft <= 4;
+			next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+			dotsBox.querySelectorAll("[data-slider-dot]").forEach((dot, i) => dot.setAttribute("aria-current", String(i === page)));
+		};
+
+		dotsBox.querySelectorAll<HTMLButtonElement>("[data-slider-dot]").forEach((dot, i) => dot.addEventListener("click", () => goTo(i)));
+		prev.addEventListener("click", () => goTo(currentPage() - 1));
+		next.addEventListener("click", () => goTo(currentPage() + 1));
+		track.addEventListener("scroll", update, { passive: true });
+		track.addEventListener("keydown", (event) => {
+			if (event.key === "ArrowRight") { event.preventDefault(); goTo(currentPage() + 1); }
+			if (event.key === "ArrowLeft") { event.preventDefault(); goTo(currentPage() - 1); }
+		});
+		window.addEventListener("resize", () => { renderDots(); update(); });
+
+		renderDots();
+		update();
+	});
+</script>
