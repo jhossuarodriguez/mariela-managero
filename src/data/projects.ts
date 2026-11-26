@@ -73,12 +73,6 @@ const projects: ProjectEntry[] = [
 		url: "https://www.ricaspizza.com/",
 	},
 	{
-		title: "Romano’s Restaurant",
-		country: "us",
-		services: ["maintenance"],
-		location: us("Milford, Delaware"),
-	},
-	{
 		title: "All In One Contractor",
 		country: "us",
 		services: ["branding"],
@@ -89,6 +83,14 @@ const projects: ProjectEntry[] = [
 		country: "us",
 		services: ["webDesign", "marketing"],
 		location: us("Miami, Florida"),
+	},
+	// Romano’s va separado de Ricca’s Pizza porque sus mockups se parecen.
+	{
+		title: "Romano’s Restaurant",
+		country: "us",
+		services: ["maintenance"],
+		location: us("Milford, Delaware"),
+		mockup: "/images/proyectos/romanos-restaurant-mockup.avif",
 	},
 	{
 		title: "Mount Dora Social (MDS)",
