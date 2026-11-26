@@ -15,8 +15,10 @@ interface ProjectEntry {
 	country: Country;
 	services: Service[];
 	location: Record<Locale, string>;
-	/** Foto o captura del proyecto en /public/images/proyectos/. Mientras no exista, se muestra un marco con el nombre. */
+	/** Captura plana del sitio en /public/images/proyectos/: se muestra dentro de una laptop dibujada. */
 	image?: string;
+	/** Foto de mockup ya armada (laptop en escena real): se muestra a todo lo ancho, tal cual. Tiene prioridad sobre `image`. */
+	mockup?: string;
 	url?: string;
 }
 
@@ -26,6 +28,7 @@ export interface Project {
 	category: string;
 	location: string;
 	image?: string;
+	mockup?: string;
 	url?: string;
 }
 
@@ -57,8 +60,8 @@ const rd = (place?: string) => ({
 	en: place ? `${place}, Dominican Republic` : "Dominican Republic",
 });
 
-// Para agregar la foto de un cliente: guárdala en /public/images/proyectos/
-// y añade `image: "/images/proyectos/<archivo>"` a su entrada.
+// Para agregar la foto de un cliente: guárdala en /public/images/proyectos/ y añade a su entrada
+// `mockup: "/images/proyectos/<archivo>"` (foto de mockup) o `image: ...` (captura plana).
 const projects: ProjectEntry[] = [
 	// Estados Unidos
 	{
@@ -66,7 +69,7 @@ const projects: ProjectEntry[] = [
 		country: "us",
 		services: ["maintenance"],
 		location: us("Milford, Delaware"),
-		image: "/images/proyectos/riccas-pizza.avif",
+		mockup: "/images/proyectos/riccas-pizza-mockup.avif",
 		url: "https://www.ricaspizza.com/",
 	},
 	{
