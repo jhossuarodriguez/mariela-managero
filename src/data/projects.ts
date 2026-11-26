@@ -66,6 +66,8 @@ const projects: ProjectEntry[] = [
 		country: "us",
 		services: ["maintenance"],
 		location: us("Milford, Delaware"),
+		image: "/images/proyectos/riccas-pizza.avif",
+		url: "https://www.ricaspizza.com/",
 	},
 	{
 		title: "Romano’s Restaurant",

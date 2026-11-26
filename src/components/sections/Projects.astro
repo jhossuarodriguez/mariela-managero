@@ -42,7 +42,20 @@ const arrowClass =
 					<article class="h-full overflow-hidden rounded-2xl border border-brand-sand bg-white">
 						<div class="relative">
 							{project.image ? (
-								<img src={project.image} alt={project.title} class="aspect-[16/10] w-full object-cover object-top" loading="lazy" decoding="async" />
+								<div class="flex aspect-[16/10] flex-col items-center justify-center bg-cream-100 px-6 pt-9 pb-2">
+									{/* Marco de computadora: pantalla, cuello y base */}
+									<div class="w-[74%] rounded-[10px] bg-charcoal p-[5px] pb-[14px] shadow-soft">
+										<img
+											src={project.image}
+											alt={project.title}
+											class="aspect-[16/10] w-full rounded-[5px] object-cover object-center"
+											loading="lazy"
+											decoding="async"
+										/>
+									</div>
+									<div class="h-3 w-[12%] bg-gradient-to-b from-charcoal/70 to-charcoal/40" aria-hidden="true"></div>
+									<div class="h-1.5 w-[28%] rounded-t-md bg-charcoal/60" aria-hidden="true"></div>
+								</div>
 							) : (
 								<div class="flex aspect-[16/10] flex-col items-center justify-center gap-2 bg-cream-100 px-4 text-center">
 									<span class="font-heading text-2xl font-bold text-brand-ink">{project.title}</span>
