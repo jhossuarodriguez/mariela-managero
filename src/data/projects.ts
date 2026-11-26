@@ -75,9 +75,9 @@ const projects: ProjectEntry[] = [
 	{
 		title: "Maps for Mom",
 		country: "us",
-		services: ["branding"],
-		location: { es: "EE. UU.", en: "USA" },
-		mockup: "/images/proyectos/maps-for-mom-paseo.avif",
+		services: ["branding", "webDesign"],
+		location: us("Orlando, Florida"),
+		mockup: "/images/proyectos/maps-for-mom-website.avif",
 	},
 	{
 		title: "All In One Contractor",
