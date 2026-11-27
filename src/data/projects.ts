@@ -84,6 +84,7 @@ const projects: ProjectEntry[] = [
 		country: "us",
 		services: ["branding"],
 		location: us("Atlanta, Georgia"),
+		mockup: "/images/proyectos/all-in-one-contractor-branding.avif",
 	},
 	{
 		title: "PBI Photo",
