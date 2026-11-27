@@ -150,6 +150,7 @@ const projects: ProjectEntry[] = [
 		country: "do",
 		services: ["rebranding"],
 		location: rd(),
+		mockup: "/images/proyectos/pamela-mieses-rebranding.avif",
 	},
 	{
 		title: "El Elyon Centro Diagnóstico",
