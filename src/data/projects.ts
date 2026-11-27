@@ -144,6 +144,7 @@ const projects: ProjectEntry[] = [
 		country: "do",
 		services: ["rebranding"],
 		location: rd("Santo Domingo"),
+		mockup: "/images/proyectos/antojitos-rebranding.avif",
 	},
 	{
 		title: "Pamela Mieses",
